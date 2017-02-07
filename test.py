@@ -21,7 +21,7 @@ W = nmf_fit.basis()
 H = nmf_fit.coef()
 E = np.linalg.norm(nmf.residuals())
 
-y = np.zeros(137728)
+y = np.zeros([137728, 4])
 
 for k in np.arange(K):
   XmagHat = np.dot(W[:,k], H[k,:])
@@ -35,4 +35,7 @@ for k in np.arange(K):
       xhat[i,j] = XmagHat[i,j] * cmath.exp(1j*phase[i,j])
 
   y_buf = librosa.istft(xhat, hop_length=256, win_length=512)
-  display(Audio(y_buf, rate=sampling_rate))
+  y[:, k] = y_buf
+
+sum_y = np.sum(y, axis=1)
+display(Audio( sum_y , rate=sampling_rate))
