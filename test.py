@@ -35,6 +35,7 @@ for k in np.arange(K):
       xhat[i,j] = XmagHat[i,j] * cmath.exp(1j*phase[i,j])
 
   y_buf = librosa.istft(xhat, hop_length=256, win_length=512)
+  display(Audio(y_buf, rate=sampling_rate))
   y[:, k] = y_buf
 
 sum_y = np.sum(y, axis=1)
